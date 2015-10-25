@@ -13,7 +13,8 @@ Java/JavaFX Gmail Application
 <h2>To Do (Short-Term)</h2>
 <ul>
   <li>Display recent emails via GUI</li>
-  <li>Notification intergration<li>
+  <li>Notification integration<li>
+  <li>Sounds</li>
 </ul>
 
 <h2>Future Plans (Long-Term)</h2>
