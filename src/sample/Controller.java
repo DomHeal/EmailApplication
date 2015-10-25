@@ -1,14 +1,18 @@
 package sample;
 
 import javafx.fxml.FXML;
+import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 
 import javax.mail.*;
+import javax.mail.search.StringTerm;
 import java.util.Properties;
 
 public class Controller {
 
+    @FXML private ChoiceBox dropMenuServer;
     @FXML private PasswordField passwordField;
     @FXML private TextField emailField;
 
@@ -16,76 +20,38 @@ public class Controller {
         System.out.println("-----------------------");
         System.out.println("Attempting to Connect");
         System.out.println("-----------------------");
-        String host = "pop.gmail.com";
         String mailStoreType = "pop3";
         String username = emailField.getText();
         String password = passwordField.getText();
+        System.out.println("Server: " + dropMenuServer.getSelectionModel().getSelectedIndex());
+        String host = serverSelected();
 
         System.out.println("Credentials Acquired!");
         System.out.println("Email: " + username);
         System.out.println("Password: " + password);
+        System.out.println("Server: " + dropMenuServer.getSelectionModel().getSelectedIndex());
+
         System.out.println("-----------------------");
-
-
-
-        check(host, mailStoreType, username, password);
+        System.out.println("Starting Thread....");
+        Thread y = new Thread(new ThreadWorker(host, mailStoreType, username, password));
+        y.start();
     }
 
-    public static void check(String host, String storeType, final String user,
-                             final String password)
-    {
-        try {
+    public String serverSelected(){
 
-            // create properties field
-            Properties properties = new Properties();
-
-            properties.put("mail.pop3s.host", host);
-            properties.put("mail.pop3s.port", "995");
-            properties.put("mail.pop3s.starttls.enable", "true");
-
-
-            // Setup authentication, get session
-            Session emailSession = Session.getInstance(properties,
-                    new javax.mail.Authenticator() {
-                        protected PasswordAuthentication getPasswordAuthentication() {
-                            return new PasswordAuthentication(
-                                    user, password);
-                        }
-                    });
-            // emailSession.setDebug(true);
-
-            // create the POP3 store object and connect with the pop server
-            Store store = emailSession.getStore("pop3s");
-
-            store.connect();
-
-            // create the folder object and open it
-            Folder emailFolder = store.getFolder("INBOX");
-            emailFolder.open(Folder.READ_ONLY);
-
-            // retrieve the messages from the folder in an array and print it
-            Message[] messages = emailFolder.getMessages();
-            System.out.println("messages.length---" + messages.length);
-
-            for (int i = 0, n = messages.length; i < n; i++) {
-                Message message = messages[i];
-                System.out.println("---------------------------------");
-                System.out.println("Email Number " + (i + 1));
-                System.out.println("Subject: " + message.getSubject());
-                System.out.println("From: " + message.getFrom()[0]);
-                System.out.println("Text: " + message.getContent().toString());
-            }
-
-            // close the store and folder objects
-            emailFolder.close(false);
-            store.close();
-
-        } catch (NoSuchProviderException e) {
-            e.printStackTrace();
-        } catch (MessagingException e) {
-            e.printStackTrace();
-        } catch (Exception e) {
-            e.printStackTrace();
+        System.out.println("Picking Server");
+        String server = null;
+        switch (dropMenuServer.getSelectionModel().getSelectedIndex()){
+            case 0: server = "";
+                break;
+            case 1: server = "pop.gmail.com";
+                ;
+                break;
+            case 2: server = "";
         }
+
+        System.out.println("Sever: " + server);
+        return server;
     }
+
 }
