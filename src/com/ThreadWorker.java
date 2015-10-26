@@ -1,6 +1,10 @@
 package com;
 
 import javax.mail.*;
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
+import java.io.File;
 import java.util.Properties;
 
 /**
@@ -29,14 +33,12 @@ public class ThreadWorker implements Runnable {
         Store store = null;
         try {
 
-            // create properties field
             Properties properties = new Properties();
 
             properties.put("mail.pop3s.host", host);
             properties.put("mail.pop3s.port", "995");
             properties.put("mail.pop3s.starttls.enable", "true");
 
-            // Setup authentication, get session
             Session emailSession = Session.getInstance(properties,
                     new javax.mail.Authenticator() {
                         protected PasswordAuthentication getPasswordAuthentication() {
@@ -46,34 +48,22 @@ public class ThreadWorker implements Runnable {
                     });
             // emailSession.setDebug(true);
 
-            // create the POP3 store object and connect with the pop server
             store = emailSession.getStore("pop3s");
-
             store.connect();
 
-            // create the folder object and open it
             emailFolder = store.getFolder("INBOX");
             emailFolder.open(Folder.READ_ONLY);
 
-            // retrieve the messages from the folder in an array and print it
             //Message[] messages = emailFolder.getMessages();
 
             while (true) {
                 System.out.println(emailFolder.getNewMessageCount());
+                if (emailFolder.hasNewMessages()){
+                    System.out.print(emailFolder.getNewMessageCount());
+                    playSound();
+                }
                 Thread.sleep(THIRTYSECONDS);
             }
-
-//            System.out.println("messages.length---" + messages.length);
-//
-//            for (int i = 0, n = messages.length; i < n; i++) {
-//                Message message = messages[i];
-//                System.out.println("---------------------------------");
-//                System.out.println("Email Number " + (i + 1));
-//                System.out.println("Subject: " + message.getSubject());
-//                System.out.println("From: " + message.getFrom()[0]);
-//                System.out.println("Text: " + message.getContent().toString());
-//            }
-
         } catch (NoSuchProviderException e) {
             e.printStackTrace();
         } catch (MessagingException e) {
@@ -89,5 +79,30 @@ public class ThreadWorker implements Runnable {
             }
 
         }
+    }
+
+    public void playSound(){
+        try {
+            AudioInputStream audioInputStream;
+            audioInputStream = AudioSystem.getAudioInputStream(ThreadWorker.class.getResource("sounds/blip.wav"));
+            final Clip clip = AudioSystem.getClip();
+            clip.open(audioInputStream);
+            clip.start();
+        } catch (Exception e){
+            System.out.println(e);
+        }
+    }
+
+    public void printMessages(Message message){
+        //            System.out.println("messages.length---" + messages.length);
+//
+//            for (int i = 0, n = messages.length; i < n; i++) {
+//                Message message = messages[i];
+//                System.out.println("---------------------------------");
+//                System.out.println("Email Number " + (i + 1));
+//                System.out.println("Subject: " + message.getSubject());
+//                System.out.println("From: " + message.getFrom()[0]);
+//                System.out.println("Text: " + message.getContent().toString());
+//            }
     }
 }
