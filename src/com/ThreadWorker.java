@@ -1,10 +1,12 @@
 package com;
 
 import javax.mail.*;
+import javax.mail.event.FolderListener;
+import javax.mail.event.MessageCountEvent;
+import javax.mail.event.MessageCountListener;
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
-import java.io.File;
 import java.util.Properties;
 
 /**
@@ -12,7 +14,7 @@ import java.util.Properties;
  */
 public class ThreadWorker implements Runnable {
 
-    private static final long THIRTYSECONDS = 30000;
+    private static final long THIRTY_SECONDS = 30000;
     private String host;
     private String storeType;
     private String user;
@@ -24,8 +26,6 @@ public class ThreadWorker implements Runnable {
         this.user = user;
         this.password = password;
     }
-
-
 
     @Override
     public void run() {
@@ -54,7 +54,8 @@ public class ThreadWorker implements Runnable {
             emailFolder = store.getFolder("INBOX");
             emailFolder.open(Folder.READ_ONLY);
 
-            //Message[] messages = emailFolder.getMessages();
+//            Message[] messages = emailFolder.getMessages();
+//            printMessages(messages);
 
             while (true) {
                 System.out.println(emailFolder.getNewMessageCount());
@@ -62,7 +63,8 @@ public class ThreadWorker implements Runnable {
                     System.out.print(emailFolder.getNewMessageCount());
                     playSound();
                 }
-                Thread.sleep(THIRTYSECONDS);
+                emailFolder.close(false);
+                Thread.sleep(THIRTY_SECONDS);
             }
         } catch (NoSuchProviderException e) {
             e.printStackTrace();
@@ -93,7 +95,7 @@ public class ThreadWorker implements Runnable {
         }
     }
 
-    public void printMessages(Message message){
+    public void printMessages(Message[] message){
         //            System.out.println("messages.length---" + messages.length);
 //
 //            for (int i = 0, n = messages.length; i < n; i++) {
