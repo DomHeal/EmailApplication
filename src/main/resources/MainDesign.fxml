@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.image.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.collections.*?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="360.0" prefWidth="480.0" xmlns="http://javafx.com/javafx/8.0.40" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.Controller">
+   <center>
+      <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
+         <children>
+            <GridPane>
+              <columnConstraints>
+                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="295.0" minWidth="10.0" prefWidth="63.0" />
+                <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" maxWidth="295.0" minWidth="10.0" prefWidth="92.0" />
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="368.0" minWidth="10.0" prefWidth="308.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="368.0" minWidth="10.0" prefWidth="77.0" />
+              </columnConstraints>
+              <rowConstraints>
+                  <RowConstraints maxHeight="46.0" minHeight="10.0" prefHeight="46.0" vgrow="SOMETIMES" />
+                <RowConstraints maxHeight="39.0" minHeight="10.0" prefHeight="32.0" vgrow="SOMETIMES" />
+                <RowConstraints maxHeight="84.0" minHeight="10.0" prefHeight="38.0" vgrow="SOMETIMES" />
+                <RowConstraints maxHeight="108.0" minHeight="0.0" prefHeight="36.0" vgrow="SOMETIMES" />
+                  <RowConstraints maxHeight="108.0" minHeight="0.0" prefHeight="19.0" vgrow="SOMETIMES" />
+              </rowConstraints>
+               <children>
+                  <Label prefHeight="17.0" prefWidth="92.0" text="Select Server: " GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                  <Label text="Email: " GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                  <Label text="Password: " GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                  <PasswordField fx:id="passwordField" promptText="password" GridPane.columnIndex="2" GridPane.rowIndex="3" />
+                  <TextField fx:id="emailField" prefHeight="20.0" prefWidth="293.0" promptText="username@gmail.com" GridPane.columnIndex="2" GridPane.rowIndex="2" />
+                  <ChoiceBox fx:id="dropMenuServer" prefHeight="25.0" prefWidth="365.0" value="-Select Server-" GridPane.columnIndex="2" GridPane.rowIndex="1">
+                  <items>
+                      <FXCollections fx:factory="observableArrayList">
+                          <String fx:value="STMP Server" />
+                          <String fx:value="POP3 Server" />
+                          <String fx:value="IMAP Server" />
+                      </FXCollections>
+                  </items>
+                  </ChoiceBox>
+               </children>
+            </GridPane>
+            <Button alignment="CENTER" mnemonicParsing="false" onAction="#connectButtonAction" prefHeight="25.0" prefWidth="92.0" text="Connect" textAlignment="CENTER">
+               <VBox.margin>
+                  <Insets bottom="50.0" />
+               </VBox.margin>
+            </Button>
+         </children>
+      </VBox>
+   </center>
+   <top>
+      <ImageView fx:id="imageLogo" fitHeight="120.0" fitWidth="480.0" pickOnBounds="true" preserveRatio="true" BorderPane.alignment="CENTER">
+      </ImageView>
+   </top>
+</BorderPane>
