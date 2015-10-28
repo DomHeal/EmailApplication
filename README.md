@@ -1,7 +1,8 @@
 # EmailApplication
 Java/JavaFX Gmail Application
-
+<p align="center">
 <img src="http://i.imgur.com/1uisQr8.png" />
+</p>
 
 
 <h2>Current Status</h2>
