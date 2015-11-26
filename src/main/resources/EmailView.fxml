@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import org.controlsfx.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="511.0" prefWidth="822.0" xmlns="http://javafx.com/javafx/8.0.40" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.MainController">
+   <bottom>
+      <MasterDetailPane fx:id="pane" detailSide="BOTTOM" prefHeight="553.0" prefWidth="822.0" BorderPane.alignment="CENTER" />
+   </bottom>
+</BorderPane>
