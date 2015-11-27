@@ -7,6 +7,7 @@ import javax.mail.event.MessageCountListener;
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
+import java.io.IOException;
 import java.util.Properties;
 
 /**
@@ -32,7 +33,7 @@ public class ThreadWorker implements Runnable {
         Folder emailFolder = null;
         Store store = null;
         try {
-
+            System.out.println("threading");
             Properties properties = new Properties();
 
             properties.put("mail.pop3s.host", host);
@@ -54,8 +55,8 @@ public class ThreadWorker implements Runnable {
             emailFolder = store.getFolder("INBOX");
             emailFolder.open(Folder.READ_ONLY);
 
-//            Message[] messages = emailFolder.getMessages();
-//            printMessages(messages);
+            Message[] messages = emailFolder.getMessages();
+            MainController.printMessages(messages);
 
             while (true) {
                 System.out.println(emailFolder.getNewMessageCount());
@@ -95,16 +96,16 @@ public class ThreadWorker implements Runnable {
         }
     }
 
-    public void printMessages(Message[] message){
-        //            System.out.println("messages.length---" + messages.length);
-//
-//            for (int i = 0, n = messages.length; i < n; i++) {
-//                Message message = messages[i];
-//                System.out.println("---------------------------------");
-//                System.out.println("Email Number " + (i + 1));
-//                System.out.println("Subject: " + message.getSubject());
-//                System.out.println("From: " + message.getFrom()[0]);
-//                System.out.println("Text: " + message.getContent().toString());
-//            }
+    public void printMessages(Message[] messages) throws MessagingException, IOException {
+            System.out.println("messages.length---" + messages.length);
+
+            for (int i = 0, n = messages.length; i < n; i++) {
+                Message message = messages[i];
+                System.out.println("---------------------------------");
+                System.out.println("Email Number " + (i + 1));
+                System.out.println("Subject: " + message.getSubject());
+                System.out.println("From: " + message.getFrom()[0]);
+                System.out.println("Text: " + message.getContent().toString());
+            }
     }
 }
