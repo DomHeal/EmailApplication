@@ -51,6 +51,7 @@ public class Controller implements Initializable {
         app_stage.hide();
         app_stage.setScene(home_page_scene);
         app_stage.show();
+        app_stage.setResizable(true);
 
         Thread y = new Thread(new ThreadWorker(host, mailStoreType, username, password));
         y.start();

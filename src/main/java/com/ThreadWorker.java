@@ -95,17 +95,4 @@ public class ThreadWorker implements Runnable {
             System.out.println(e);
         }
     }
-
-    public void printMessages(Message[] messages) throws MessagingException, IOException {
-            System.out.println("messages.length---" + messages.length);
-
-            for (int i = 0, n = messages.length; i < n; i++) {
-                Message message = messages[i];
-                System.out.println("---------------------------------");
-                System.out.println("Email Number " + (i + 1));
-                System.out.println("Subject: " + message.getSubject());
-                System.out.println("From: " + message.getFrom()[0]);
-                System.out.println("Text: " + message.getContent().toString());
-            }
-    }
 }
